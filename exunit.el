@@ -115,8 +115,10 @@ and filename relative to the dependency."
   (concat (exunit-test-filename) ":" (number-to-string (line-number-at-pos))))
 
 (defun exunit-colorize-compilation-buffer ()
-  (let ((inhibit-read-only t))
-    (ansi-color-apply-on-region compilation-filter-start (point))))
+  (message "colorizing compilation buffer! %s" (format-time-string "%Y-%m-%d %H:%M:%S"))
+  )
+  ;; (let ((inhibit-read-only t))
+  ;;   (ansi-color-apply-on-region compilation-filter-start (point))))
 
 (defvar exunit-compilation-error-regexp-alist-alist
   '((elixir-warning "warning: [^\n]*\n +\\([0-9A-Za-z@_./:-]+\\.exs?\\):\\([0-9]+\\)" 1 2 nil 1 1)
@@ -131,6 +133,8 @@ and filename relative to the dependency."
 
 (defun exunit-do-compile (args)
   "Run compile and save the ARGS for future invocation."
+  (message "exunit-do-compile starting (%s)" (princ args))
+  (message "at %s" (format-time-string "%Y-%m-%d %H:%M:%S"))
   (setq exunit-last-directory default-directory
         exunit-last-arguments args)
 
@@ -138,6 +142,7 @@ and filename relative to the dependency."
 
 (defun exunit-compile (args)
   "Run mix test with the given ARGS."
+  (message "in exunit-compile with (%s)" (princ args))
   (let ((default-directory (exunit-project-root))
         (compilation-environment exunit-environment))
     (exunit-do-compile
